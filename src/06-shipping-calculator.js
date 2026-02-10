@@ -2,7 +2,7 @@
  * 📦 ShopSwift Shipping Calculator
  *
  * ShopSwift is a growing online store. They've hired you to build their
- * shipping cost calculator. The cost depends on the package weight,
+ * shipping orderTotal calculator. The orderTotal depends on the package weight,
  * where it's going, and the order total.
  *
  * Domestic Shipping (country === "US"):
@@ -26,8 +26,39 @@
  * @param {number} weight - Package weight in kilograms
  * @param {string} country - Destination country code (e.g., "US", "UK", "IN")
  * @param {number} orderTotal - Total order amount in dollars
- * @returns {number} Shipping cost, 0 for free shipping, or -1 for invalid input
+ * @returns {number} Shipping orderTotal, 0 for free shipping, or -1 for invalid input
  */
 export function calculateShipping(weight, country, orderTotal) {
-  // Your code here
+  if (weight <= 0 || orderTotal < 0) {
+    return -1;
+  } else {
+    let cost = 0;
+    if (country === "US") {
+      if (orderTotal > 50) {
+        return 0;
+      }
+      if (weight <= 1) {
+        cost = cost + 5;
+      } else if (weight <= 5) {
+        cost = cost + 10;
+      } else if (weight > 5) {
+        cost = cost + 15;
+      }
+      return cost;
+    } else {
+      if (weight <= 1) {
+        cost = cost + 15;
+      } else if (weight <= 5) {
+        cost = cost + 25;
+      } else if (weight > 5) {
+        cost = cost + 40;
+      }
+
+      if (orderTotal > 100) {
+        return 0;
+      } else {
+        return cost;
+      }
+    }
+  }
 }
